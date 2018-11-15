@@ -1,0 +1,96 @@
+<% include ../newheader %>
+<% title = 'Broadcast Notification' %>
+  <% sub_title = (isNewRecord) ? 'Send Notification' : 'Update Notification' %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          <%= title %>
+        </h1>
+        <ol class="breadcrumb">
+          <li>
+            <a href="/admin/dashboard">
+              <i class="fa fa-dashboard"></i> Dashboard</a>
+          </li>
+          <li>
+            <a href="/admin/access-code/index">
+              </i>
+              <%= title %>
+            </a>
+          </li>
+          <li class="active">
+            <%= sub_title %>
+          </li>
+        </ol>
+      </section>
+
+      <section class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <!--<h3 class="box-title"><%= sub_title %></h3>-->
+              </div>
+
+              <form action="/admin/notification/send" enctype="multipart/form-data" method="post" role="form" data-toggle="validator" autocomplete="off">
+
+                <div class="box-body">
+
+                  <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="title">Title
+                            <span class="required">*</span>
+                          </label>
+                          <input type="text" class="form-control" name="title" value="<%= (isNewRecord) ? '' : model.title  %>" required placeholder="Enter Title here"
+                          />
+                          <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="bio">Message<span class="required">*</span></label>
+                          <textarea  class="form-control" name="message" required placeholder="Enter message here" ></textarea>
+                          <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- <div class="col-md-6">
+                      <div class="form-group">
+                      <label>Person to Send</label>
+                          <select class="form-control select2" style="width: 100%;" name="person_to_send" id="person_to_send" required >
+                              <option value="">Select Send Person</option>
+                              <option value="1" >User</option>
+                              <option value="2" >Artist</option>
+                          </select>
+                          <div class="help-block with-errors"></div>
+                      </div>
+                    </div>    -->
+
+                  </div>
+
+
+                </div>
+                <!-- /.box-body -->
+                <input type="hidden" name="id" value="<%= (isNewRecord) ? 0 : model.id %>" />
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary">
+                    <%= (isNewRecord) ? 'Send' : 'Update' %>
+                  </button>
+                  <a href="index" class="btn btn-danger">Cancel</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+      </section>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    <% include ../new_footer %>

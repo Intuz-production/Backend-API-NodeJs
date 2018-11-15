@@ -1,0 +1,67 @@
+<% include header%>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Send Notification</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+                <% if ( typeof(message)!='undefined' && message.length>0) { %>
+                    <div class="alert alert-warning">
+                    <div class="flash"><%= message %></div>
+                    </div>
+                <% } %>
+            <div class="panel panel-default">                                
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="item-filter" class="form-group item_filter">
+                                    <form action="/admin/notification/send" enctype="multipart/form-data" method="post" role="form" data-toggle="validator" autocomplete="off">
+                                        <div class="row">                            
+                                           
+                                            <div class="col-xs-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="title">Message
+                                                            <span class="req">*</span>
+                                                        </label>
+                                                        <textarea  class="form-control" name="message" required placeholder="Enter message here" ></textarea>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="up-img">Upload File
+                                                                <span class="req">*</span>
+                                                            </label>
+                                                            <input id="upload-input" class="upfile" type="file" name="ad_photo" accept="image/jpg" required>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                    </div>
+                                                
+                                           
+                                            <div class="col-xs-12 col-sm-12">
+                                                <button type="submit" class="btn btn-success">Send</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+
+                                               
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-6 -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /#page-wrapper -->
+<% include footer%>

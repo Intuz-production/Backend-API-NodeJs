@@ -1,0 +1,142 @@
+<% include newheader %>
+  <% title = 'Profile Management' %>
+    <% sub_title = (isNewRecord) ? 'Create Profile' : 'Update Profile' %>
+
+
+
+
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            <%= title %>
+          </h1>
+
+          <ol class="breadcrumb">
+            <li>
+              <a href="/admin/dashboard">
+                <i class="fa fa-dashboard"></i> Home</a>
+            </li>
+            <li class="active">
+              <%= sub_title %>
+            </li>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <!--<h3 class="box-title"><%= sub_title %></h3>-->
+                </div>
+                <form action="/admin/user/profile" enctype="multipart/form-data" method="post" role="form" data-toggle="validator" autocomplete="off">
+                  <div class="box-body">
+
+                    <input type="hidden" name="user_id" value="<%=model.user_id%>">
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="email">Email
+                            <span class="required">*</span>
+                          </label>
+                          <input type="email" class="form-control" name="email" max="50" value="<%=model.email%>" placeholder="Email" required />
+                          <div class="help-block with-errors"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="first_name">First Name
+                            <span class="required">*</span>
+                          </label>
+                          <input type="text" class="form-control" name="first_name" max="50" value="<%=model.first_name%>" placeholder="First Name" required
+                          />
+                          <div class="help-block with-errors"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="last_name">Last Name
+                            <span class="required">*</span>
+                          </label>
+                          <input type="text" class="form-control" name="last_name" max="50" value="<%=model.last_name%>" placeholder="Last Name" required
+                          />
+                          <div class="help-block with-errors"></div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="address">Address</label>
+                          <input type="text" class="form-control" name="address" max="255" value="<%=model.address%>" placeholder="Address" />
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="event_name">Zip Code</label>
+                          <input type="text" class="form-control" name="zipcode" max="50" value="<%= model.zipcode %>" placeholder="Zip Code" />
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="profile_pic">Upload File</label>
+                          <div class="image_setting clearfix">
+                            <div class="upload_logo_file">
+                              <i class="glyphicon glyphicon-open-file"></i>
+                              <p>File Upload</p>
+                            </div>
+                            <input id="upload-input" class="upfile" type="file" name="profile_pic" accept="image/*">
+                            <div class="middle-img">
+                              <img src="<%= getImage('profile_pic', (isNewRecord) ? '' : model.profile_pic) %>" height="120"
+                                id="logo-img" />
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                  </div>
+                  <!-- /.box-body -->
+
+                  <input type="hidden" name="id" value="<%= (isNewRecord) ? 0 : model.user_id %>" />
+                  <input type="hidden" name="old_profile_pic" value="<%= (isNewRecord) ? '' : model.profile_pic%>" />
+
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">
+                      <%= (isNewRecord) ? 'Create' : 'Update' %>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /.row -->
+        </section>
+        <!-- /.content -->
+      </div>
+
+      <script>
+        function readURL(input) {
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#logo-img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+          }
+        }
+        $("#upload-input").change(function () {
+          readURL(this);
+        });
+      </script>
+
+      <% include new_footer %>

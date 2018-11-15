@@ -1,0 +1,104 @@
+<% include ../newheader %>
+  <% title = 'Admin Users' %>
+    <% sub_title = 'User List' %>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            <%= title %>
+          </h1>
+          <ol class="breadcrumb">
+            <li>
+              <a href="/admin/dashboard">
+                <i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li class="active">
+              <%= title %>
+            </li>
+          </ol>
+        </section>
+
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box">
+                <div class="box-header">
+                  <a href="index" title="refresh">
+                    <i class="fa fa-refresh page_refresh_icon"></i>
+                  </a>
+                  <a href="create" class="btn btn-success create_new_button">Add New</a>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <div class="table-responsive">
+                    <table id="users-table" class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Full Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <th>User Role</th>
+                          <th>Profile Photo</th>
+                          <th></th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+
+      <script>
+        $(document).ready(function () {
+          $('#users-table').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+              {
+                extend: 'csv',
+                text: 'Export CSV',
+                // className: 'btn btn-default',
+                exportOptions: {
+                  columns: [0, 1, 2, 3, 4]
+                }
+              },
+              {
+                extend: 'pdf',
+                text: 'Export PDF',
+                // className: 'btn btn-default',
+                exportOptions: {
+                  columns: [0, 1, 2, 3, 4]
+                }
+              }
+            ],
+            serverSide: true,
+            ajax: {
+              url: '/admin/admin-user/index',
+              type: 'POST'
+            },
+            columnDefs: [
+              { orderable: false, targets: 0 },
+              { orderable: false, targets: -1 },
+              { orderable: false, targets: 5 },
+              { orderable: false, targets: 6 }
+            ]
+          });
+        });
+      </script>
+
+      <% include ../new_footer %>

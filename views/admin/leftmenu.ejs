@@ -1,0 +1,31 @@
+<!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+<script>
+$(document).ready(function(){
+    
+        var url = $(location).attr('href').split("/").splice(0, 5).join("/");
+            
+        $.ajax({
+            url: "/admin/site/side-menu",
+            method:"post",
+            datatype:"html",
+            data:{"url":url},
+            success: function(result){
+                if (result.status == 1) {
+                    $('.sidebar-menu').html(result.data);
+                }
+            }
+        });
+    });
+</script>

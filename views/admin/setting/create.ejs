@@ -1,0 +1,128 @@
+<% include ../newheader %>
+<% title = 'Settings Management' %>
+<% sub_title = (isNewRecord) ? 'Create' : 'Update' %>
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1><%= title %></h1>
+      <ol class="breadcrumb">
+        <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="/admin/setting/update"></i> <%= title %></a></li>
+        <li class="active"><%= sub_title %></li>
+      </ol>
+    </section>
+    
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <!--<h3 class="box-title"><%= sub_title %></h3>-->
+            </div>
+              
+            <form action="/admin/setting/update" enctype="multipart/form-data" method="post" role="form" data-toggle="validator" autocomplete="off">
+                
+              <div class="box-body">
+
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="inputEmail">Email<span class="required">*</span></label>
+                            <input type="email" class="form-control" name="setting_email" value="<%= (isNewRecord) ? '' : model.setting_email  %>" required placeholder="Name"  />
+                            <div class="help-block with-errors"></div>
+                          </div>
+                      </div>
+
+                </div>
+                  <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="profile_pic">Upload File</label>
+                              <div class="image_setting clearfix">
+                                <div class="upload_logo_file">
+                                  <i class="glyphicon glyphicon-open-file"></i>
+                                  <p>File Upload</p>
+                                </div>
+                                <input id="upload-input" class="upfile" type="file" name="setting_logo_image" accept="image/*">
+                                <div class="help-block"></div>
+                                <div class="middle-img"><img id="logo-img" src="<%- getImage('setting_logo_image',model.setting_logo_image) %>" height="100"></div>
+                              </div>
+          
+                            </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="profile_pic">Upload File</label>
+                              <div class="image_setting clearfix">
+                                <div class="upload_logo_file">
+                                  <i class="glyphicon glyphicon-open-file"></i>
+                                  <p>File Upload</p>
+                                </div>
+                                <input id="upload_input_favicon"  class="upfile" type="file"  name="setting_favicon_image"  accept="image/jpg">
+                                <div class="help-block"></div>
+                                <div class="middle-img"><img id="logo-img" src="<%- getImage('setting_favicon_image',model.setting_favicon_image) %>" height="100"></div>
+                              </div>
+          
+                            </div>
+                          </div>
+
+              </div>         
+              
+              </div>
+              <!-- /.box-body -->
+              <input type="hidden" name="id" value="<%= (isNewRecord) ? 0 : model.id %>" />
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary"><%= (isNewRecord) ? 'Create' : 'Update' %></button>
+                
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    
+  </div>
+  <!-- /.content-wrapper -->
+ 
+  
+<% include ../new_footer %>
+<script>
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#logo-img').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#upload-input").change(function(){
+            readURL(this);
+        });
+        
+        
+        </script>
+
+<script>
+
+  function readURL_f(input) {
+      if (input.files && input.files[0]) {
+          var f_reader = new FileReader();
+          f_reader.onload = function (e) {
+              $('#logo_img_favicon').attr('src', e.target.result);
+          }
+          f_reader.readAsDataURL(input.files[0]);
+      }
+  }
+  $("#upload_input_favicon").change(function(){
+      readURL_f(this);
+  });
+  
+  
+  </script>        

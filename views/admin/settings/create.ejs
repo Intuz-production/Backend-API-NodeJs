@@ -1,0 +1,147 @@
+<% include ../newheader %>
+  <% title = 'Settings' %>
+    <% sub_title = (isNewRecord) ? 'Create' : 'Update' %>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            <%= sub_title %>
+          </h1>
+          <ol class="breadcrumb">
+            <li>
+              <a href="/admin/dashboard">
+                <i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="/admin/settings/index">
+                </i>
+                <%= title %>
+              </a>
+            </li>
+            <li class="active">
+              <%= sub_title %>
+            </li>
+          </ol>
+        </section>
+
+        <section class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <!--<h3 class="box-title"><%= sub_title %></h3>-->
+                </div>
+
+                <form action="/admin/settings/save" enctype="multipart/form-data" method="post" role="form" data-toggle="validator" autocomplete="off">
+
+                  <div class="box-body">
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="settingKey">Setting Name
+                            <span class="required">*</span>
+                          </label>
+                          <input type="text" class="form-control" name="settingKey" value="<%= (isNewRecord) ? '' : model.settingKey %>" required placeholder="Setting Name"
+                            <%=( isNewRecord) ? '' : 'readonly' %> />
+                          <div class="help-block with-errors"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+
+                          <% if(model.settingKey == 'setting_logo_image') { %>
+                            <label for="Logo Image">Upload File</label>
+                            <div class="image_setting clearfix">
+                              <div class="upload_logo_file">
+                                <i class="glyphicon glyphicon-open-file"></i>
+                                <p>File Upload <span class="required">*</span></p>
+                              </div>
+                              <input id="upload-logo" class="upfile" type="file" name="setting_logo_image" accept="image/*">
+                              <div class="help-block"></div>
+                              <div class="middle-img">
+                                <img id="logo-img" src="<%- getImage('setting_logo_image', model.settingValue) %>" height="100">
+                              </div>
+                            </div>
+
+                            <% } else if(model.settingKey == 'setting_favicon_image') { %>
+
+                              <label for="Favicon Image">Upload File <span class="required">*</span></label>
+                              <div class="image_setting clearfix">
+                                <div class="upload_logo_file">
+                                  <i class="glyphicon glyphicon-open-file"></i>
+                                  <p>File Upload</p>
+                                </div>
+                                <input id="upload-favicon" class="upfile" type="file" name="setting_favicon_image" accept="image/jpg">
+                                <div class="help-block"></div>
+                                <div class="middle-img">
+                                  <img id="favicon-img" src="<%- getImage('setting_favicon_image',model.settingValue) %>" height="100">
+                                </div>
+                              </div>
+
+                              <% } else { %>
+                                <label for="settingValue">Setting Value
+                                  <span class="required">*</span>
+                                </label>
+                                <input type="text" class="form-control" name="settingValue" value="<%= (isNewRecord) ? '' : model.settingValue %>" required
+                                  placeholder="Setting Value" />
+                                <div class="help-block with-errors"></div>
+                                <% } %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.box-body -->
+                  <input type="hidden" name="settingId" value="<%= (isNewRecord) ? 0 : model.settingId %>" />
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">
+                      <%= (isNewRecord) ? 'Create' : 'Update' %>
+                    </button>
+                    <a href="index" class="btn btn-danger">Cancel</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /.row -->
+        </section>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+
+      <% include ../new_footer %>
+        <script>
+
+          function readURL(input) {
+            if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                $('#logo-img').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+            }
+          }
+          $("#upload-logo").change(function () {
+            readURL(this);
+          });
+
+          function readURL_f(input) {
+            if (input.files && input.files[0]) {
+              var f_reader = new FileReader();
+              f_reader.onload = function (e) {
+                $('#favicon-img').attr('src', e.target.result);
+              }
+              f_reader.readAsDataURL(input.files[0]);
+            }
+          }
+          $("#upload-favicon").change(function () {
+            readURL_f(this);
+          });
+
+        </script>

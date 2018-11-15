@@ -1,0 +1,78 @@
+
+<% include ../newheader %>
+
+<% title = 'Roles Management' %>
+<!--<% sub_title = 'Artist List' %>-->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1><%= title %></h1>
+      <ol class="breadcrumb">
+        <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active"><%= title %></li>
+      </ol>
+    </section>
+    
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <a href="index" title="refresh"><i class="fa fa-refresh page_refresh_icon" ></i></a>  
+              <!--<h3 class="box-title"><%= sub_title %></h3>-->
+               <a href="create" class="btn btn-success create_new_button" >Create New</a>
+               
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                
+                <div class="table-responsive">
+                    <table id="users-table" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <% if(datalist.length > 0){ %>
+                                <% datalist.forEach(function(data, key){ %>
+                                  <tr>
+                                    <td><%= data.name %></td>
+                                    <td>
+                                        <a class="useraccess_active-dective <% if(data.status != 0){ %>text-success<% }else{ %>text-danger<% } %>" title="Status" onclick="Activedeactive('<%=data.id%>', '<%= (data.status == 0) ? 1 : 0%>', '<%= controller %>')" style="cursor:pointer;"><i class="fa <% if(data.status != 0){ %>fa-eye<% }else{ %>fa-eye-slash<% } %>"></i></a> 
+                                        <a class="useraccess_update" href="/admin/<%= controller %>/update?id=<%=data.id%>" style="cursor:pointer;"><i class="fa fa-pencil"></i></a>
+                                        <a class="useraccess_delete" onclick="Delete('<%= data.id %>', '<%= controller %>')" title="Delete" style="cursor:pointer;"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                  </tr>
+                                <% }); %>
+                              <% }else{ %>
+                                  <tr>
+                                      <td colspan="6">no data found</td>
+                                  </tr>
+                              <% } %>
+                        </tbody>
+                      </table>
+                </div>
+                
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  
+
+
+<% include ../new_footer %>

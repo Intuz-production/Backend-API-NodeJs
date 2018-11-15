@@ -1,0 +1,100 @@
+<% include ../newheader %>
+<% title = 'Roles Management' %>
+<% sub_title = (isNewRecord) ? 'Create Roles' : 'Update Roles' %>
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1><%= title %></h1>
+      <ol class="breadcrumb">
+        <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="/admin/roles/index"><%= title %></a></li>
+        <li class="active"><%= sub_title %></li>
+      </ol>
+    </section>
+    
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <!--<h3 class="box-title"><%= sub_title %></h3>-->
+            </div>
+              
+            <form action="/admin/roles/save" enctype="multipart/form-data" method="post" role="form" data-toggle="validator" autocomplete="off">
+                
+              <div class="box-body">
+
+                  <div class="row">
+                      
+                      <div class="col-md-6 col-md-offset-2">
+                          <div class="form-group">
+                            <label for="name">Name<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="name" value="<%= (isNewRecord) ? '' : model.name  %>" required placeholder="Roles Name" />
+                            <div class="help-block with-errors"></div>
+                          </div>
+                      </div>
+                      
+                      
+                      <!--menulist-->
+                      
+                      <% if(menulist.length > 0){ %>
+                       
+                        <div class="col-md-12 ">
+                            
+                         <% menulist.forEach(function(data, key){ %>
+                         
+                          <% var is_add_checked = (isNewRecord) ? '' : (data.is_add != '1') ? '' : 'checked' %>
+                          <% var is_update_checked = (isNewRecord) ? '' : (data.is_update != '1') ? '' : 'checked' %>
+                          <% var is_delete_checked = (isNewRecord) ? '' : (data.is_delete != '1') ? '' : 'checked' %>
+                          <% var is_view_checked = (isNewRecord) ? '' : (data.is_view != '1') ? '' : 'checked' %>
+                          <% var is_publish_checked = (isNewRecord) ? '' : (data.is_publish != '1') ? '' : 'checked' %>
+
+
+                               <div class="form-group checkbox_label">
+                                   <div class="row">
+                                       <div class="col-md-2 ">
+                                           <strong><%= data.name %></strong>
+                                           <input type="hidden" name="roles[menu_id][<%= data.id%>]" value="<%= data.id%>">
+                                       </div>    
+
+                                       <div class="col-md-10 ">
+                                            <label><input <%= is_add_checked %> type="checkbox" class="flat-red" name="roles[add][<%= data.id%>]" value="1">Add</label>
+                                            <label><input <%= is_update_checked %> type="checkbox" class="flat-red" name="roles[update][<%= data.id%>]" value="1">Update</label>
+                                            <label><input <%= is_delete_checked %> type="checkbox" class="flat-red" name="roles[delete][<%= data.id%>]" value="1">Delete</label>
+                                            <label><input <%= is_view_checked %> type="checkbox" class="flat-red" name="roles[view][<%= data.id%>]" value="1">View</label>
+                                            <label><input <%= is_publish_checked %> type="checkbox" class="flat-red" name="roles[publish][<%= data.id%>]" value="1">Publish</label>
+                                       </div>    
+                                       
+                                   </div>
+                                </div>
+                         <% }); %>
+                         
+                         </div>
+                      <% } %>
+                      
+                      
+                      
+                      
+                  </div>
+                  
+                
+              </div>
+              <!-- /.box-body -->
+              <input type="hidden" name="id" value="<%= (isNewRecord) ? 0 : model.id %>" />
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary"><%= (isNewRecord) ? 'Create' : 'Update' %></button>
+                <a href="index" class="btn btn-danger" >Cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    
+  </div>
+  <!-- /.content-wrapper -->  
+<% include ../new_footer %>
+  

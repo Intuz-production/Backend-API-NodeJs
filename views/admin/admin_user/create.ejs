@@ -1,0 +1,180 @@
+<% include ../newheader %>
+  <% title = 'Admin Users' %>
+    <% sub_title = (isNewRecord) ? 'Create User' : 'Update User' %>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            <%= title %>
+          </h1>
+          <ol class="breadcrumb">
+            <li>
+              <a href="/admin/dashboard">
+                <i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="/admin/admin-user/index">
+                <%= title %>
+              </a>
+            </li>
+            <li class="active">
+              <%= sub_title %>
+            </li>
+          </ol>
+        </section>
+
+        <section class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">
+                    <%= sub_title %>
+                  </h3>
+                </div>
+
+                <form action="/admin/admin-user/save" enctype="multipart/form-data" method="post" role="form" data-toggle="validator" autocomplete="off">
+
+                  <div class="box-body">
+
+
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="first_name">First Name
+                            <span class="required">*</span>
+                          </label>
+                          <input type="text" class="form-control" name="first_name" value="<%= (isNewRecord) ? '' : model.first_name%>" required placeholder="First Name"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="last_name">Last Name
+                            <span class="required">*</span>
+                          </label>
+                          <input type="text" class="form-control" name="last_name" value="<%= (isNewRecord) ? '' : model.last_name%>" required placeholder="Last Name"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="email">Email
+                            <span class="required">*</span>
+                          </label>
+                          <input type="email" class="form-control" name="email" value="<%= (isNewRecord) ? '' : model.email%>" required placeholder="Email"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="phone">Phone
+                            <span class="required">*</span>
+                          </label>
+                          <input type="text" class="form-control" name="phone" value="<%= (isNewRecord) ? '' : model.phone%>" required placeholder="Phone"
+                            onblur="js: return checkExists(this.value, 'phone', '<%=model.user_id%>')" />
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>User Role</label>
+                          <select class="form-control select2" style="width: 100%;" name="role_id" id="role_id" required>
+                            <option value="">Select User Role</option>
+                            <% roles.forEach(function(role){ %>
+                              <% if(!isNewRecord && role.id == model.role_id) {%>
+                                <option value="<%= role.id %>" selected="selected">
+                                  <%= role.name %>
+                                </option>
+                                <% }else{ %>
+                                  <option value="<%= role.id %>">
+                                    <%= role.name %>
+                                  </option>
+                                  <% }%>
+                                    <% }); %>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="bio">Bio</label>
+                          <textarea class="form-control" name="bio" placeholder="Bio"><%= (model.bio == null) ? '' : model.bio %></textarea>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="profile_pic">Upload File</label>
+                          <div class="image_setting clearfix">
+                            <div class="upload_logo_file">
+                              <i class="glyphicon glyphicon-open-file"></i>
+                              <p>File Upload</p>
+                            </div>
+                            <input id="upload-input" class="upfile" type="file" name="profile_pic" accept="image/*">
+                            <div class="middle-img">
+                              <img src="<%= getImage('profile_pic', (isNewRecord) ? '' : model.profile_pic) %>" height="120"
+                                id="logo-img" />
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <!-- <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="profile_pic">Upload File</label>
+                            <input id="upload-input" class="upfile" type="file" name="profile_pic" accept="image/*">
+                            <img src="/profile_pic/<%=model.profile_pic%>" width="120" id="logo-img"/>
+                          </div>
+                      </div> -->
+
+                    </div>
+
+
+                  </div>
+                  <!-- /.box-body -->
+
+                  <input type="hidden" name="user_id" value="<%= (isNewRecord) ? 0 : model.user_id %>" />
+                  <input type="hidden" name="old_phone" value="<%= (isNewRecord) ? '' :model.phone%>" />
+                  <input type="hidden" name="old_profile_pic" value="<%= (isNewRecord) ? '' : model.profile_pic%>" />
+
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">
+                      <%= (isNewRecord) ? 'Create' : 'Update' %>
+                    </button>
+                    <a href="index" class="btn btn-danger">Cancel</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /.row -->
+        </section>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+      <script>
+        function readURL(input) {
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#logo-img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+          }
+        }
+        $("#upload-input").change(function () {
+          readURL(this);
+        });
+      </script>
+
+      <% include ../new_footer %>

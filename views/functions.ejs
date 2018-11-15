@@ -1,0 +1,15 @@
+<%
+
+getImage = function(dir,img) {
+
+        img_path = "/images/no_image/no_image.jpg";
+        if(img != ''){ 
+            check_img_path =  fs.realpathSync('.')+"/uploads/"+dir +"/"+img;
+            var exists = fs.existsSync(check_img_path);
+            if(exists){
+                    img_path =  "/"+dir +"/"+img;
+                }
+        }
+        return img_path;
+}
+%>
