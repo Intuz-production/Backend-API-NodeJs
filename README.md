@@ -1,3 +1,8 @@
+## About Intuz
+This library is maintained by [Intuz](https://www.intuz.com) — an AI-first software development company specializing in [custom software development](https://www.intuz.com/software-development)
+and [AI development services](https://www.intuz.com/ai-development).
+<br><br>
+
 # Backend-API-NodeJs
 We have created a very simple and ready to use admin panel using node.js and MySQL. It covers all the basic modules in backend and few sample APIs i.e. login/signup, forgot password, media uploads etc.
 <br>
